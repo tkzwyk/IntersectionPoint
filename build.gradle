@@ -1,9 +1,13 @@
 plugins {
     id 'java'
+    id 'signing'
+    id 'idea'
+    id 'maven'
 }
 
-group 'zawataki'
-version '1.0-SNAPSHOT'
+group = 'com.github.zawataki'
+archivesBaseName = 'intersection-point'
+version = '0.1.0'
 
 sourceCompatibility = 1.8
 
@@ -13,4 +17,68 @@ repositories {
 
 dependencies {
     testCompile group: 'junit', name: 'junit', version: '4.12'
+}
+
+task javadocJar(type: Jar) {
+    classifier = 'javadoc'
+    from javadoc
+}
+
+task sourcesJar(type: Jar) {
+    classifier = 'sources'
+    from sourceSets.main.allSource
+}
+
+artifacts {
+    archives javadocJar, sourcesJar
+}
+
+signing {
+    sign configurations.archives
+}
+
+uploadArchives {
+    repositories {
+        mavenDeployer {
+            beforeDeployment { MavenDeployment deployment -> signing.signPom(deployment) }
+
+            repository(url: "https://oss.sonatype.org/service/local/staging/deploy/maven2/") {
+                authentication(userName: ossrhUsername, password: ossrhPassword)
+            }
+
+            snapshotRepository(url: "https://oss.sonatype.org/content/repositories/snapshots/") {
+                authentication(userName: ossrhUsername, password: ossrhPassword)
+            }
+
+            pom.project {
+                name 'Intersection Point Library'
+                packaging 'jar'
+                // optionally artifactId can be defined here
+                description 'A library for intersection point calculation of figure.'
+                url 'https://github.com/zawataki/IntersectionPoint'
+
+                scm {
+                    connection 'scm:git:git@github.com:zawataki/IntersectionPoint.git'
+                    developerConnection 'scm:git:git@github.com:zawataki/IntersectionPoint.git'
+                    url 'https://github.com/zawataki/IntersectionPoint'
+                }
+
+                licenses {
+                    license {
+                        name 'MIT License'
+                        url 'https://opensource.org/licenses/MIT'
+                    }
+                }
+
+                developers {
+                    developer {
+                        id 'zawataki'
+                        name 'Yuki Takizawa'
+                        email 'y.takizawa64@gmail.com'
+                        organizationUrl 'https://github.com/zawataki'
+                    }
+                }
+            }
+        }
+    }
 }

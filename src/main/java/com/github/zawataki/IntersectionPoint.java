@@ -10,7 +10,7 @@ import java.util.Optional;
  * @see <a href="https://stackoverflow.com/a/15594751/9246253">java - Line
  * crosses Rectangle - how to find the cross points? - Stack Overflow</a>
  */
-public class IntersectPoint {
+public class IntersectionPoint {
 
     static public Optional<Point2D> getIntersectionPoint(Line2D l1, Line2D l2) {
 

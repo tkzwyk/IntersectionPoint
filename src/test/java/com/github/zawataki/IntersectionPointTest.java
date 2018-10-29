@@ -31,4 +31,16 @@ public class IntersectionPointTest {
                         expectedIntersectionPoint, intersectionPoint.get(),
                 is(expectedIntersectionPoint));
     }
+
+    @Test
+    public void getIntersectionPoint_notIntersectedLines() {
+        final Line2D line1 = new Line2D.Double(0, 0, 1, 1);
+        final Line2D line2 = new Line2D.Double(1, 1.1, 2, 2);
+
+        final Optional<Point2D> intersectionPoint =
+                IntersectionPoint.getIntersectionPoint(line1, line2);
+
+        assertThat("Got intersection point", intersectionPoint.isPresent(),
+                is(false));
+    }
 }

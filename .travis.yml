@@ -3,3 +3,10 @@ sudo: false
 jdk:
   - oraclejdk8
   - openjdk8
+
+before_install:
+  - export ORG_GRADLE_PROJECT_ossrhUsername=test
+  - export ORG_GRADLE_PROJECT_ossrhPassword=test
+
+install:
+  - ./gradlew assemble -x signArchives

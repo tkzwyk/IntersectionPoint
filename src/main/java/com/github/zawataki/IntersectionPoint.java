@@ -15,14 +15,30 @@ import java.util.Optional;
 public class IntersectionPoint {
 
     /**
-     * Get intersection point from given two lines
+     * Get intersection point from given two lines. If intersection point is on
+     * endpoint of a line, it's regarded as not intersected.
      *
-     * @param l1               1st line
-     * @param l2               2nd line
+     * @param l1 1st line
+     * @param l2 2nd line
      *
      * @return A intersection point if exists. Otherwise empty.
      */
     static public Optional<Point2D> getIntersectionPoint(Line2D l1, Line2D l2) {
+        return getIntersectionPoint(l1, l2, false);
+    }
+
+    /**
+     * Get intersection point from given two lines
+     *
+     * @param l1               1st line
+     * @param l2               2nd line
+     * @param includesEndpoint Includes endpoint of line if {@code true}.
+     *                         Otherwise excludes.
+     *
+     * @return A intersection point if exists. Otherwise empty.
+     */
+    static public Optional<Point2D> getIntersectionPoint(Line2D l1, Line2D l2,
+            boolean includesEndpoint) {
 
         // Line AB represented as a1x + b1y = c1
         final double a1 = l1.getP2().getY() - l1.getP1().getY();
@@ -47,17 +63,12 @@ public class IntersectionPoint {
                 new Point2D.Double(doubleToBigDecimal(x).doubleValue(),
                         doubleToBigDecimal(y).doubleValue());
 
-        if (!pointIsOnLineExcludesEndpoint(crossPoint, l1) ||
-                !pointIsOnLineExcludesEndpoint(crossPoint, l2)) {
+        if (!pointIsOnLine(crossPoint, l1, includesEndpoint) ||
+                !pointIsOnLine(crossPoint, l2, includesEndpoint)) {
             return Optional.empty();
         }
 
         return Optional.of(crossPoint);
-    }
-
-    static private boolean pointIsOnLineExcludesEndpoint(Point2D point,
-            Line2D line) {
-        return pointIsOnLine(point, line, false);
     }
 
     /**

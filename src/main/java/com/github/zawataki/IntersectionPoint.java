@@ -7,11 +7,21 @@ import java.math.RoundingMode;
 import java.util.Optional;
 
 /**
+ * A library for getting an intersection point of lines or rectangles
+ *
  * @see <a href="https://stackoverflow.com/a/15594751/9246253">java - Line
  * crosses Rectangle - how to find the cross points? - Stack Overflow</a>
  */
 public class IntersectionPoint {
 
+    /**
+     * Get intersection point from given two lines
+     *
+     * @param l1               1st line
+     * @param l2               2nd line
+     *
+     * @return A intersection point if exists. Otherwise empty.
+     */
     static public Optional<Point2D> getIntersectionPoint(Line2D l1, Line2D l2) {
 
         // Line AB represented as a1x + b1y = c1
@@ -50,6 +60,16 @@ public class IntersectionPoint {
         return pointIsOnLine(point, line, false);
     }
 
+    /**
+     * A given point is on a given line or not
+     *
+     * @param point
+     * @param line
+     * @param includesEndpoint Includes endpoint of line if {@code true}.
+     *                         Otherwise excludes.
+     *
+     * @return {@code true} if a point is on a line. Otherwise {@code false}
+     */
     static private boolean pointIsOnLine(Point2D point, Line2D line,
             boolean includesEndpoint) {
 

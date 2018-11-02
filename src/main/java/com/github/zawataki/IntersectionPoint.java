@@ -70,7 +70,7 @@ public class IntersectionPoint {
      *
      * @return {@code true} if a point is on a line. Otherwise {@code false}
      */
-    static private boolean pointIsOnLine(Point2D point, Line2D line,
+    static public boolean pointIsOnLine(Point2D point, Line2D line,
             boolean includesEndpoint) {
 
         if (!includesEndpoint &&

@@ -74,8 +74,8 @@ public class IntersectionPoint {
     /**
      * A given point is on a given line or not
      *
-     * @param point
-     * @param line
+     * @param point            the specified point
+     * @param line             the specified line
      * @param includesEndpoint Includes endpoint of line if {@code true}.
      *                         Otherwise excludes.
      *

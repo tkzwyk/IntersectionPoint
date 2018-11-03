@@ -95,4 +95,75 @@ public class IntersectionPointTest {
                 intersectionPointWhenIncludesEndpoint.get(),
                 is(expectedIntersectionPoint));
     }
+
+    @Test
+    public void pointIsOnLine() {
+        final Line2D line = new Line2D.Double(0, 0, 1, 1);
+        final Point2D point = new Point2D.Double(0.2, 0.2);
+        final boolean includesEndpoint = true;
+
+        final boolean pointIsOnLineWhenIncludesEndpoint =
+                IntersectionPoint.pointIsOnLine(point, line, includesEndpoint);
+
+        assertThat(point + " is NOT located on " + toStringFrom(line) +
+                        " when includes endpoint", pointIsOnLineWhenIncludesEndpoint,
+                is(true));
+
+
+        final boolean pointIsOnLineWhenExcludesEndpoint =
+                IntersectionPoint.pointIsOnLine(point, line, !includesEndpoint);
+
+        assertThat(point + " is NOT located on " + toStringFrom(line) +
+                        " when excludes endpoint", pointIsOnLineWhenExcludesEndpoint,
+                is(true));
+    }
+
+    @Test
+    public void pointIsOnLineEndpoint() {
+        final Line2D line = new Line2D.Double(0, 0, 1, 1);
+        final Point2D point = new Point2D.Double(1, 1);
+        final boolean includesEndpoint = true;
+
+        final boolean pointIsOnLineWhenIncludesEndpoint =
+                IntersectionPoint.pointIsOnLine(point, line, includesEndpoint);
+
+        assertThat(point + " is NOT located on " + toStringFrom(line) +
+                        " when includes endpoint", pointIsOnLineWhenIncludesEndpoint,
+                is(true));
+
+
+        final boolean pointIsOnLineWhenExcludesEndpoint =
+                IntersectionPoint.pointIsOnLine(point, line, !includesEndpoint);
+
+        assertThat(point + " is located on " + toStringFrom(line) +
+                        " when excludes endpoint", pointIsOnLineWhenExcludesEndpoint,
+                is(false));
+    }
+
+    @Test
+    public void pointIsNotOnLine() {
+        final Line2D line = new Line2D.Double(0, 0, 1, 1);
+        final Point2D point = new Point2D.Double(1, 1.00001);
+        final boolean includesEndpoint = true;
+
+        final boolean pointIsOnLineWhenIncludesEndpoint =
+                IntersectionPoint.pointIsOnLine(point, line, includesEndpoint);
+
+        assertThat(point + " is located on " + toStringFrom(line) +
+                        " when includes endpoint", pointIsOnLineWhenIncludesEndpoint,
+                is(false));
+
+
+        final boolean pointIsOnLineWhenExcludesEndpoint =
+                IntersectionPoint.pointIsOnLine(point, line, !includesEndpoint);
+
+        assertThat(point + " is located on " + toStringFrom(line) +
+                        " when excludes endpoint", pointIsOnLineWhenExcludesEndpoint,
+                is(false));
+    }
+
+    private String toStringFrom(Line2D line) {
+        return String.format("Line2D[ [%s, %s] -> [%s, %s] ]", line.getX1(),
+                line.getY1(), line.getX2(), line.getY2());
+    }
 }
